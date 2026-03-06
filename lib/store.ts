@@ -4,7 +4,6 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-// A single chat message
 export interface ChatMessage {
   id: string;
   role: "user" | "assistant";
@@ -12,23 +11,23 @@ export interface ChatMessage {
   timestamp: number;
 }
 
-// Per-character chat history
 export interface ChatHistory {
   messages: ChatMessage[];
 }
 
 interface AppState {
-  // Chat histories keyed by character id
+  subscriptionKey: string;
+  setSubscriptionKey: (key: string) => void;
+  clearSubscriptionKey: () => void;
+
   chatHistories: Record<string, ChatHistory>;
   addMessage: (characterId: string, message: ChatMessage) => void;
   clearChat: (characterId: string) => void;
   getLastMessage: (characterId: string) => ChatMessage | null;
 }
 
-// Max messages per character to keep storage manageable
 const MAX_MESSAGES = 200;
 
-// Generate a simple unique ID
 function generateId(): string {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
 }
@@ -38,6 +37,10 @@ export { generateId };
 export const useAppStore = create<AppState>()(
   persist(
     (set, get) => ({
+      subscriptionKey: "",
+      setSubscriptionKey: (key: string) => set({ subscriptionKey: key }),
+      clearSubscriptionKey: () => set({ subscriptionKey: "" }),
+
       chatHistories: {},
 
       addMessage: (characterId: string, message: ChatMessage) =>

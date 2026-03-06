@@ -7,7 +7,6 @@ import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { Colors } from "../lib/theme";
 
-// Keep splash screen visible while fonts load
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {

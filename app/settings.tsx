@@ -1,25 +1,48 @@
-// Settings screen — app info, clear all chats
+// Settings screen — subscription key management
 
-import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import { useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors, Fonts } from "../lib/theme";
 import { useAppStore } from "../lib/store";
-import { CHARACTER_LIST } from "../lib/characters";
 
 export default function SettingsScreen() {
-  const clearChat = useAppStore((s) => s.clearChat);
+  const subscriptionKey = useAppStore((s) => s.subscriptionKey);
+  const setSubscriptionKey = useAppStore((s) => s.setSubscriptionKey);
+  const clearSubscriptionKey = useAppStore((s) => s.clearSubscriptionKey);
 
-  const handleClearAll = () => {
-    Alert.alert("Clear All Chats", "Delete all conversation history?", [
+  const [newKey, setNewKey] = useState("");
+
+  const maskedKey = subscriptionKey
+    ? subscriptionKey.slice(0, 4) + "..." + subscriptionKey.slice(-4)
+    : "Not set";
+
+  const handleSave = () => {
+    const trimmed = newKey.trim();
+    if (!trimmed) return;
+    setSubscriptionKey(trimmed);
+    setNewKey("");
+    Alert.alert("Saved", "Subscription key updated.");
+  };
+
+  const handleClear = () => {
+    Alert.alert("Clear Key", "Remove your subscription key?", [
       { text: "Cancel", style: "cancel" },
       {
-        text: "Clear All",
+        text: "Clear",
         style: "destructive",
         onPress: () => {
-          CHARACTER_LIST.forEach((c) => clearChat(c.id));
-          Alert.alert("Done", "All conversations cleared.");
+          clearSubscriptionKey();
+          Alert.alert("Cleared", "Subscription key removed.");
         },
       },
     ]);
@@ -27,7 +50,6 @@ export default function SettingsScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backBtn}>
           <Ionicons name="chevron-back" size={28} color={Colors.white} />
@@ -37,14 +59,40 @@ export default function SettingsScreen() {
       </View>
 
       <View style={styles.content}>
-        <Text style={styles.sectionTitle}>Data</Text>
+        <Text style={styles.sectionTitle}>Subscription Key</Text>
+        <Text style={styles.label}>Current key</Text>
+        <Text style={styles.value}>{maskedKey}</Text>
 
-        <TouchableOpacity style={styles.dangerButton} onPress={handleClearAll}>
-          <Ionicons name="trash-outline" size={20} color="#e74c3c" />
-          <Text style={styles.dangerButtonText}>Clear All Conversations</Text>
-        </TouchableOpacity>
+        <Text style={[styles.label, { marginTop: 16 }]}>Enter new key</Text>
+        <TextInput
+          style={styles.input}
+          value={newKey}
+          onChangeText={setNewKey}
+          placeholder="Paste subscription key..."
+          placeholderTextColor={Colors.textMuted}
+          autoCapitalize="none"
+          autoCorrect={false}
+        />
 
-        {/* App info */}
+        <View style={styles.buttonRow}>
+          <TouchableOpacity
+            style={[styles.button, !newKey.trim() && styles.buttonDisabled]}
+            onPress={handleSave}
+            disabled={!newKey.trim()}
+          >
+            <Text style={styles.buttonText}>Save Key</Text>
+          </TouchableOpacity>
+
+          {subscriptionKey ? (
+            <TouchableOpacity
+              style={[styles.button, styles.buttonDanger]}
+              onPress={handleClear}
+            >
+              <Text style={styles.buttonText}>Clear Key</Text>
+            </TouchableOpacity>
+          ) : null}
+        </View>
+
         <View style={styles.appInfo}>
           <Text style={styles.appInfoText}>School of Athens Mobile v1.0.0</Text>
           <Text style={styles.appInfoText}>
@@ -87,19 +135,47 @@ const styles = StyleSheet.create({
     color: Colors.white,
     marginBottom: 16,
   },
-  dangerButton: {
-    flexDirection: "row",
-    alignItems: "center",
+  label: {
+    fontFamily: Fonts.medium,
+    fontSize: 14,
+    color: Colors.textMuted,
+    marginBottom: 6,
+  },
+  value: {
+    fontFamily: Fonts.regular,
+    fontSize: 16,
+    color: Colors.white,
+  },
+  input: {
+    fontFamily: Fonts.regular,
+    fontSize: 15,
+    color: Colors.white,
     backgroundColor: Colors.card,
     borderRadius: 10,
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-    gap: 10,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    marginBottom: 16,
   },
-  dangerButtonText: {
+  buttonRow: {
+    flexDirection: "row",
+    gap: 12,
+  },
+  button: {
+    backgroundColor: Colors.accent,
+    borderRadius: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+  },
+  buttonDisabled: {
+    opacity: 0.4,
+  },
+  buttonDanger: {
+    backgroundColor: "#e74c3c",
+  },
+  buttonText: {
     fontFamily: Fonts.semiBold,
     fontSize: 15,
-    color: "#e74c3c",
+    color: "#1a1510",
   },
   appInfo: {
     marginTop: 40,

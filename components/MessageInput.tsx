@@ -57,7 +57,7 @@ export default function MessageInput({ onSend, disabled }: Props) {
         <Ionicons
           name="send"
           size={20}
-          color={text.trim() && !disabled ? Colors.textPlayer : Colors.textMuted}
+          color={text.trim() && !disabled ? "#1a1510" : Colors.textMuted}
         />
       </TouchableOpacity>
     </View>

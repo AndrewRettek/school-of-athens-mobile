@@ -1,5 +1,5 @@
 // API layer — calls the School of Athens Railway proxy server
-// The SoA server expects OpenAI format: {messages: [{role, content}]}
+// The SoA server expects OpenAI-format messages (system + history + user in one array)
 
 import { ChatMessage } from "./store";
 import { buildSystemPrompt, CHARACTERS } from "./characters";
@@ -14,33 +14,39 @@ interface ChatError {
   error: string;
 }
 
-// Send a message and get AI response
 export async function sendChatMessage(
   characterId: string,
   userMessage: string,
-  history: ChatMessage[]
+  history: ChatMessage[],
+  subscriptionKey?: string
 ): Promise<string> {
   const character = CHARACTERS[characterId];
   if (!character) throw new Error(`Unknown character: ${characterId}`);
 
   const systemPrompt = buildSystemPrompt(character);
 
-  // Build messages array in OpenAI format (system + history + user message)
+  // Build OpenAI-format messages array: system + history + user
   const messages: { role: string; content: string }[] = [
     { role: "system", content: systemPrompt },
   ];
 
-  // Add conversation history
   for (const msg of history) {
     messages.push({ role: msg.role, content: msg.content });
   }
 
-  // Add the new user message
   messages.push({ role: "user", content: userMessage });
+
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+  };
+
+  if (subscriptionKey) {
+    headers["Authorization"] = `Bearer ${subscriptionKey}`;
+  }
 
   const response = await fetch(`${API_BASE}/v1/chat`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers,
     body: JSON.stringify({
       messages,
       temperature: 0.85,
@@ -69,7 +75,6 @@ export async function sendChatMessage(
   return data.content;
 }
 
-// Health check
 export async function checkServerHealth(): Promise<boolean> {
   try {
     const response = await fetch(`${API_BASE}/health`);

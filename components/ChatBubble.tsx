@@ -19,10 +19,7 @@ export default function ChatBubble({ message, characterId }: Props) {
   });
 
   return (
-    <View
-      style={[styles.row, isPlayer ? styles.rowRight : styles.rowLeft]}
-    >
-      {/* Philosopher avatar on the left for NPC messages */}
+    <View style={[styles.row, isPlayer ? styles.rowRight : styles.rowLeft]}>
       {!isPlayer && (
         <Image source={AVATARS[characterId]} style={styles.avatar} />
       )}

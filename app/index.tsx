@@ -1,4 +1,4 @@
-// Home screen — philosopher list (no age gate needed)
+// Home screen — philosopher selection (no age gate needed)
 
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -11,7 +11,6 @@ import CharacterCard from "../components/CharacterCard";
 export default function HomeScreen() {
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header */}
       <View style={styles.header}>
         <Text style={styles.title}>School of Athens</Text>
         <TouchableOpacity onPress={() => router.push("/settings")}>
@@ -19,7 +18,6 @@ export default function HomeScreen() {
         </TouchableOpacity>
       </View>
 
-      {/* Philosopher list */}
       <FlatList
         data={CHARACTER_LIST}
         keyExtractor={(item) => item.id}
@@ -49,7 +47,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: Fonts.bold,
-    fontSize: 26,
+    fontSize: 28,
     color: Colors.white,
   },
   list: {

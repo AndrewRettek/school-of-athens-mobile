@@ -28,11 +28,11 @@ export default function ChatScreen() {
     useAppStore((s) => s.chatHistories[characterId!]?.messages) || [];
   const addMessage = useAppStore((s) => s.addMessage);
   const clearChat = useAppStore((s) => s.clearChat);
+  const subscriptionKey = useAppStore((s) => s.subscriptionKey);
 
   const [isTyping, setIsTyping] = useState(false);
   const flatListRef = useRef<FlatList>(null);
 
-  // Auto-scroll to bottom when messages change
   useEffect(() => {
     if (messages.length > 0) {
       setTimeout(() => {
@@ -43,7 +43,6 @@ export default function ChatScreen() {
 
   const handleSend = useCallback(
     async (text: string) => {
-      // Add player message
       const playerMsg: ChatMessage = {
         id: generateId(),
         role: "user",
@@ -52,11 +51,9 @@ export default function ChatScreen() {
       };
       addMessage(characterId!, playerMsg);
 
-      // Show typing indicator and call API
       setIsTyping(true);
 
       try {
-        // Get current history including the new player message
         const currentHistory = [
           ...(useAppStore.getState().chatHistories[characterId!]?.messages || []),
         ];
@@ -64,11 +61,10 @@ export default function ChatScreen() {
         const response = await sendChatMessage(
           characterId!,
           text,
-          // Send all messages except the latest user message — it's included separately
-          currentHistory.slice(0, -1)
+          currentHistory.slice(0, -1),
+          subscriptionKey || undefined
         );
 
-        // Add AI response
         const aiMsg: ChatMessage = {
           id: generateId(),
           role: "assistant",
@@ -84,7 +80,7 @@ export default function ChatScreen() {
         setIsTyping(false);
       }
     },
-    [characterId, addMessage]
+    [characterId, addMessage, subscriptionKey]
   );
 
   const handleReset = useCallback(() => {
@@ -106,7 +102,6 @@ export default function ChatScreen() {
         behavior={Platform.OS === "ios" ? "padding" : undefined}
         keyboardVerticalOffset={0}
       >
-        {/* Message list */}
         <FlatList
           ref={flatListRef}
           data={messages}
@@ -121,7 +116,6 @@ export default function ChatScreen() {
           }
         />
 
-        {/* Input bar */}
         <SafeAreaView edges={["bottom"]} style={styles.inputSafe}>
           <MessageInput onSend={handleSend} disabled={isTyping} />
         </SafeAreaView>
