@@ -1,0 +1,42 @@
+{
+  "expo": {
+    "name": "School of Athens",
+    "slug": "school-of-athens-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "schoolofathens",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./assets/images/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1a1510"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.schoolofathens.mobile"
+    },
+    "android": {
+      "package": "com.schoolofathens.mobile",
+      "adaptiveIcon": {
+        "backgroundColor": "#1a1510"
+      }
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": ""
+      }
+    }
+  }
+}
