@@ -1,27 +1,30 @@
-// Warm marble & gold theme for School of Athens
+// Ancient Greece premium game theme — marble, gold, parchment
 
 export const Colors = {
-  background: "#1a1510",
-  statusBar: "#141210",
-  header: "#141210",
-  inputBar: "#141210",
-  navBar: "#0f0d0a",
-  card: "#2a2318",
+  background: "#0d0b08",
+  statusBar: "#0d0b08",
+  header: "#1a1610",
+  inputBar: "#1a1610",
+  navBar: "#0d0b08",
+  card: "#1e1a14",
   divider: "#3d3428",
 
-  bubblePlayer: "#c4a265",
-  bubbleNpc: "#2b2520",
-  textPlayer: "#1a1510",
-  textNpc: "#f5e6c8",
+  bubblePlayer: "#b8963e",
+  bubbleNpc: "#1c1916",
+  textPlayer: "#0d0b08",
+  textNpc: "#ede0c8",
 
-  cardText: "#f5e6c8",
-  cardPreview: "#a89878",
-  timestamp: "rgba(245, 230, 200, 0.5)",
+  cardText: "#ede0c8",
+  cardPreview: "#9c8660",
+  timestamp: "rgba(237, 224, 200, 0.5)",
 
-  accent: "#c4a265",
+  accent: "#d4a944",
+  gold: "#d4a944",
+  goldBorder: "rgba(212, 169, 68, 0.3)",
+  goldBorderMedium: "rgba(212, 169, 68, 0.5)",
 
-  white: "#f5e6c8",
-  textMuted: "#a89878",
+  white: "#ede0c8",
+  textMuted: "#9c8660",
 };
 
 export const Fonts = {

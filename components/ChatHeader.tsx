@@ -1,4 +1,4 @@
-// Chat screen header — back button, avatar, name, status, reset button
+// Chat screen header — back button, avatar, name, epithet, reset button
 
 import { View, Text, Image, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -30,17 +30,19 @@ export default function ChatHeader({ character, isTyping, onReset }: Props) {
         <Ionicons name="chevron-back" size={28} color={Colors.white} />
       </TouchableOpacity>
 
-      <Image source={AVATARS[character.id]} style={styles.avatar} />
+      <View style={styles.avatarRing}>
+        <Image source={AVATARS[character.id]} style={styles.avatar} />
+      </View>
 
       <View style={styles.info}>
         <Text style={styles.name}>{character.name}</Text>
         <Text
           style={[
             styles.status,
-            isTyping && { color: character.accentColor },
+            isTyping && { color: Colors.gold },
           ]}
         >
-          {isTyping ? "Typing..." : "Online"}
+          {isTyping ? "Composing..." : character.epithet}
         </Text>
       </View>
 
@@ -58,18 +60,27 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.header,
     paddingHorizontal: 8,
     paddingVertical: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.divider,
+    borderBottomWidth: 2,
+    borderBottomColor: Colors.goldBorder,
   },
   backBtn: {
     padding: 4,
   },
-  avatar: {
-    width: 38,
-    height: 38,
-    borderRadius: 19,
+  avatarRing: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    borderWidth: 2,
+    borderColor: Colors.gold,
+    justifyContent: "center",
+    alignItems: "center",
     marginLeft: 4,
     marginRight: 10,
+  },
+  avatar: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
   },
   info: {
     flex: 1,
@@ -83,6 +94,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.regular,
     fontSize: 13,
     color: Colors.textMuted,
+    fontStyle: "italic",
   },
   resetBtn: {
     padding: 8,

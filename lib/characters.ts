@@ -5,6 +5,7 @@ import { ImageSourcePropType } from "react-native";
 export interface Character {
   id: string;
   name: string;
+  epithet: string;
   accentColor: string;
   systemPrompt: string;
 }
@@ -156,6 +157,7 @@ export function buildSystemPrompt(character: Character): string {
 const SOCRATES: Character = {
   id: "socrates",
   name: "Socrates",
+  epithet: "The Gadfly of Athens",
   accentColor: "#c4a265",
   systemPrompt: SOCRATES_PROMPT,
 };
@@ -163,6 +165,7 @@ const SOCRATES: Character = {
 const ARISTOTLE: Character = {
   id: "aristotle",
   name: "Aristotle",
+  epithet: "The Stagirite",
   accentColor: "#2c5f8a",
   systemPrompt: ARISTOTLE_PROMPT,
 };
@@ -170,6 +173,7 @@ const ARISTOTLE: Character = {
 const HERACLITUS: Character = {
   id: "heraclitus",
   name: "Heraclitus",
+  epithet: "The Obscure",
   accentColor: "#d4722a",
   systemPrompt: HERACLITUS_PROMPT,
 };
@@ -177,6 +181,7 @@ const HERACLITUS: Character = {
 const EPICURUS: Character = {
   id: "epicurus",
   name: "Epicurus",
+  epithet: "The Sage of the Garden",
   accentColor: "#5a8a4e",
   systemPrompt: EPICURUS_PROMPT,
 };
@@ -184,6 +189,7 @@ const EPICURUS: Character = {
 const HERODOTUS: Character = {
   id: "herodotus",
   name: "Herodotus",
+  epithet: "The Father of History",
   accentColor: "#8a3040",
   systemPrompt: HERODOTUS_PROMPT,
 };
@@ -191,6 +197,7 @@ const HERODOTUS: Character = {
 const DIOGENES: Character = {
   id: "diogenes",
   name: "Diogenes",
+  epithet: "The Dog of Sinope",
   accentColor: "#7a6540",
   systemPrompt: DIOGENES_PROMPT,
 };

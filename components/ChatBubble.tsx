@@ -1,4 +1,4 @@
-// Chat message bubble — player (right, gold) or philosopher (left, dark)
+// Chat message bubble — player (right, bronze) or philosopher (left, dark marble)
 
 import { View, Text, Image, StyleSheet } from "react-native";
 import { Colors, Fonts } from "../lib/theme";
@@ -55,7 +55,7 @@ export default function ChatBubble({ message, characterId }: Props) {
 const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
-    marginBottom: 8,
+    marginBottom: 12,
     paddingHorizontal: 12,
   },
   rowLeft: {
@@ -65,19 +65,21 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   avatar: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    width: 34,
+    height: 34,
+    borderRadius: 17,
     marginRight: 8,
     marginTop: 4,
+    borderWidth: 1,
+    borderColor: Colors.goldBorder,
   },
   bubbleWrapper: {
     maxWidth: "75%",
   },
   bubble: {
-    borderRadius: 18,
-    paddingVertical: 10,
-    paddingHorizontal: 14,
+    borderRadius: 20,
+    paddingVertical: 11,
+    paddingHorizontal: 16,
   },
   bubblePlayer: {
     backgroundColor: Colors.bubblePlayer,
@@ -86,11 +88,13 @@ const styles = StyleSheet.create({
   bubbleNpc: {
     backgroundColor: Colors.bubbleNpc,
     borderBottomLeftRadius: 4,
+    borderWidth: 1,
+    borderColor: Colors.goldBorder,
   },
   text: {
     fontFamily: Fonts.regular,
-    fontSize: 15,
-    lineHeight: 21,
+    fontSize: 16,
+    lineHeight: 22,
   },
   textPlayer: {
     color: Colors.textPlayer,
@@ -102,7 +106,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.regular,
     fontSize: 11,
     color: Colors.timestamp,
-    marginTop: 3,
+    marginTop: 4,
   },
   timestampLeft: {
     textAlign: "left",

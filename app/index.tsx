@@ -1,4 +1,4 @@
-// Home screen — philosopher selection (no age gate needed)
+// Home screen — philosopher selection
 
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -12,10 +12,13 @@ export default function HomeScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>School of Athens</Text>
-        <TouchableOpacity onPress={() => router.push("/settings")}>
-          <Ionicons name="settings-outline" size={24} color={Colors.textMuted} />
-        </TouchableOpacity>
+        <View style={styles.titleBlock}>
+          <Text style={styles.titleAccent}>🏛️</Text>
+          <Text style={styles.title}>School of Athens</Text>
+          <Text style={styles.titleAccent}>🏛️</Text>
+        </View>
+        <Text style={styles.subtitle}>Converse with the great minds of Athens</Text>
+        <View style={styles.goldLine} />
       </View>
 
       <FlatList
@@ -29,6 +32,13 @@ export default function HomeScreen() {
           />
         )}
       />
+
+      <TouchableOpacity
+        style={styles.settingsBtn}
+        onPress={() => router.push("/settings")}
+      >
+        <Ionicons name="settings-outline" size={22} color={Colors.textMuted} />
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }
@@ -39,19 +49,48 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.background,
   },
   header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 20,
-    paddingVertical: 16,
+    paddingTop: 20,
+    paddingBottom: 8,
+  },
+  titleBlock: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
+  titleAccent: {
+    fontSize: 22,
   },
   title: {
     fontFamily: Fonts.bold,
     fontSize: 28,
-    color: Colors.white,
+    color: Colors.gold,
+    letterSpacing: 1,
+  },
+  subtitle: {
+    fontFamily: Fonts.regular,
+    fontSize: 14,
+    color: Colors.textMuted,
+    marginTop: 6,
+    fontStyle: "italic",
+  },
+  goldLine: {
+    width: 120,
+    height: 2,
+    backgroundColor: Colors.goldBorder,
+    marginTop: 14,
+    borderRadius: 1,
   },
   list: {
     paddingHorizontal: 16,
+    paddingTop: 16,
     paddingBottom: 20,
+  },
+  settingsBtn: {
+    position: "absolute",
+    top: 58,
+    right: 20,
+    padding: 4,
   },
 });

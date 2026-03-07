@@ -1,4 +1,4 @@
-// Tappable philosopher card with avatar, name, last message preview
+// Tappable philosopher card with avatar, name, epithet, last message preview
 
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { Colors, Fonts } from "../lib/theme";
@@ -17,17 +17,20 @@ export default function CharacterCard({ character, onPress }: Props) {
     ? lastMessage.role === "user"
       ? `You: ${lastMessage.content}`
       : lastMessage.content
-    : "Tap to start chatting";
+    : "Tap to begin a dialogue";
 
   return (
     <TouchableOpacity
-      style={[styles.card, { borderLeftColor: character.accentColor }]}
+      style={styles.card}
       onPress={onPress}
       activeOpacity={0.7}
     >
-      <Image source={AVATARS[character.id]} style={styles.avatar} />
+      <View style={styles.avatarRing}>
+        <Image source={AVATARS[character.id]} style={styles.avatar} />
+      </View>
       <View style={styles.textContainer}>
         <Text style={styles.name}>{character.name}</Text>
+        <Text style={styles.epithet}>{character.epithet}</Text>
         <Text style={styles.preview} numberOfLines={1}>
           {preview}
         </Text>
@@ -41,25 +44,42 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: Colors.card,
-    borderRadius: 12,
-    borderLeftWidth: 4,
-    padding: 14,
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: Colors.goldBorder,
+    padding: 16,
     marginBottom: 12,
   },
-  avatar: {
-    width: 52,
-    height: 52,
-    borderRadius: 26,
+  avatarRing: {
+    width: 68,
+    height: 68,
+    borderRadius: 34,
+    borderWidth: 2,
+    borderColor: Colors.gold,
+    justifyContent: "center",
+    alignItems: "center",
     marginRight: 14,
+  },
+  avatar: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
   },
   textContainer: {
     flex: 1,
   },
   name: {
     fontFamily: Fonts.semiBold,
-    fontSize: 17,
+    fontSize: 18,
     color: Colors.cardText,
-    marginBottom: 3,
+    marginBottom: 2,
+  },
+  epithet: {
+    fontFamily: Fonts.regular,
+    fontSize: 13,
+    color: Colors.gold,
+    fontStyle: "italic",
+    marginBottom: 4,
   },
   preview: {
     fontFamily: Fonts.regular,

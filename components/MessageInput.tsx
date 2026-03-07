@@ -38,7 +38,7 @@ export default function MessageInput({ onSend, disabled }: Props) {
         style={styles.input}
         value={text}
         onChangeText={setText}
-        placeholder="Type a message..."
+        placeholder="Speak your mind..."
         placeholderTextColor={Colors.textMuted}
         multiline
         maxLength={2000}
@@ -57,7 +57,7 @@ export default function MessageInput({ onSend, disabled }: Props) {
         <Ionicons
           name="send"
           size={20}
-          color={text.trim() && !disabled ? "#1a1510" : Colors.textMuted}
+          color={text.trim() && !disabled ? Colors.background : Colors.textMuted}
         />
       </TouchableOpacity>
     </View>
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 8,
     borderTopWidth: 1,
-    borderTopColor: Colors.divider,
+    borderTopColor: Colors.goldBorder,
   },
   input: {
     flex: 1,
@@ -80,21 +80,25 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: Colors.white,
     backgroundColor: Colors.card,
-    borderRadius: 20,
+    borderRadius: 22,
+    borderWidth: 1,
+    borderColor: Colors.goldBorder,
     paddingHorizontal: 16,
     paddingVertical: 10,
     maxHeight: 100,
     marginRight: 8,
   },
   sendButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: Colors.accent,
+    width: 42,
+    height: 42,
+    borderRadius: 21,
+    backgroundColor: Colors.gold,
     justifyContent: "center",
     alignItems: "center",
   },
   sendButtonDisabled: {
     backgroundColor: Colors.card,
+    borderWidth: 1,
+    borderColor: Colors.goldBorder,
   },
 });

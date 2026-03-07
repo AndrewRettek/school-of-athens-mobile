@@ -4,7 +4,7 @@
 import { ChatMessage } from "./store";
 import { buildSystemPrompt, CHARACTERS } from "./characters";
 
-const API_BASE = "https://school-of-athens-proxy.up.railway.app";
+const API_BASE = "https://attractive-learning-production-e561.up.railway.app";
 
 interface ChatResponse {
   content: string;
